@@ -1,0 +1,5 @@
+spectrums.o
+signals.o
+synth.o
+create_spectrums
+create_signals

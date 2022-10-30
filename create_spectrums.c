@@ -24,7 +24,7 @@ int main(void)
 
     amp_spectrum(freq, nu, 2.0 * M_PI * NU * 2, 2.0 * M_PI * NU * 8, 0, M_PI, freq_modulate, out);
     amp_spectrum(phase, nu, 2.0 * M_PI * NU, 2.0 * M_PI * NU * 4, 0, M_PI, phase_modulate, out);
-    amp_spectrum(amps, nu, 2.0 * M_PI * NU, 2.0 * M_PI * NU * 8, 0, 0, amp_modulate, out);
+    amp_spectrum(amps, nu, 2.0 * M_PI * NU * 2, 2.0 * M_PI * NU * 16, 0, 0, amp_modulate, out);
 
     /* На этом этапе получили в out выход амплитудного спектра */
     int indexes[3] = {0};
