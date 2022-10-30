@@ -1,4 +1,10 @@
-#include "spectrums.h"
+#include <fftw3.h>
+#include <math.h>
+#include "signals.h"
+
+#define N_FOURIER 512
+#define F_DISCRETE 2048
+
 
 void amp_spectrum(double *a, 
         double *t, 

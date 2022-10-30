@@ -35,3 +35,9 @@ set xlabel "nu"
 set ylabel "A"
 set title "Phase spectrum" font "Helvetica Bold, 20"
 plot "./plots/phase_spectrum.dat" with lines
+
+set xlabel "t" 
+set ylabel "A"
+set title "Synth signal" font "Helvetica Bold, 20"
+plot "./plots/synth.dat" with lines
+

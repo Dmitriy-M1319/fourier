@@ -4,32 +4,43 @@
 
 void find_max_3(int *indexes, double *a)
 {
-	double max = 0;
-	int index = 0;
-	for(int i = 0; i < 3; i++)
-	{
-		for(int k = 0; k < N_FOURIER; k++)
-		{
-			if(a[k] >= max)
-			{
-				int in_indexes_array = 0;
-				for(int j = 0; j < 3; j++)
-				{
-					if(indexes[j] == k)
-					{
-						in_indexes_array = 1;
-						break;
-					}
-				}
-				if(!in_indexes_array)
-				{
-					max = a[k];
-					index = k;
-				}
-			}
-		}
-		indexes[i] = index;
-	}
+    double new_a[N_FOURIER];
+    for(int i = 0; i < N_FOURIER; i++)
+    {
+        new_a[i] = a[i];
+    }
+
+    for (int i = 0; i < N_FOURIER - 1; i++)
+    {
+        for (int j = 0; j < N_FOURIER - i - 1; j++)
+        {
+            if (new_a[j] < new_a[j + 1])
+            {
+                int tmp = new_a[j];
+                new_a[j] = new_a[j + 1];
+                new_a[j + 1] = tmp;
+            }
+        }
+    }
+
+    int k = 0, prev = 0;
+    for(int i = 0; i < 500; i++)
+    {
+        if(k == 3)
+            break;
+
+        for(int j = 0; j < N_FOURIER; j++)
+        {
+            if((int)a[j] == (int)new_a[i] && (int)new_a[i] != prev)
+            {
+                indexes[k] = j;
+                k++;
+                prev = new_a[i];
+                break;
+            }
+        }
+    }
+ 
 }
 
 void filter_signal(fftw_complex *amps, int *indexes)

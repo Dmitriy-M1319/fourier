@@ -1,10 +1,11 @@
-#include <fftw3.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "spectrums.h"
 #include "signals.h"
+#include "synth.h"
 
 #define NU 16
+//#define DEBUG 1
 
 int main(void)
 {
@@ -25,21 +26,60 @@ int main(void)
     amp_spectrum(phase, nu, 2.0 * M_PI * NU, 2.0 * M_PI * NU * 4, 0, M_PI, phase_modulate, out);
     amp_spectrum(amps, nu, 2.0 * M_PI * NU, 2.0 * M_PI * NU * 8, 0, 0, amp_modulate, out);
 
-    
+    /* На этом этапе получили в out выход амплитудного спектра */
+    int indexes[3] = {0};
+    find_max_3(indexes, amps);
+
+#ifdef DEBUG
+    puts("Indexes:");
+    for(int i = 0; i < 3; i++)
+    {
+        printf("%d\n", indexes[i]);
+    }
+#endif
+
+    filter_signal(out, indexes);
+
+#ifdef DEBUG
+    puts("");
+    puts("Filter spectrum:");
+    for(int i = 0; i < N_FOURIER; i++)
+    {
+        printf("Re %lf -- Im %lf\n", out[i][0], out[i][1]);
+    }
+#endif
+
+    double synth_x[N_FOURIER];
+    double synth_y[N_FOURIER];
+
+    synth_signal(out, synth_y, synth_x);
+
+ #ifdef DEBUG
+    puts("");
+    puts("Synth signal:");
+    for(int i = 0; i < N_FOURIER; i++)
+    {
+        printf("x = %lf: y = %lf\n", synth_x[i], synth_y[i]);
+    }
+#endif
+   
     for(int i = 0; i < N_FOURIER / 3; i++)
     {
         fprintf(plot1,"%lf %lf \n" , nu[i], amps[i]);
         fprintf(plot2,"%lf %lf \n" , nu[i], freq[i]);
         fprintf(plot3,"%lf %lf \n" , nu[i], phase[i]);
+        fprintf(plot4,"%lf %lf \n" , synth_x[i], synth_y[i]);
     }
 
     fflush(plot1);
     fflush(plot2);
     fflush(plot3);
+    fflush(plot4);
 
     fclose(plot1);
     fclose(plot2);
     fclose(plot3);
+    fclose(plot4);
     
     fftw_free(out);
 
