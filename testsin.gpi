@@ -1,43 +1,55 @@
 #!/usr/bin/gnuplot -persist
 
+# Отрисовка созданных данных сигналов и спектров в файле формата PostScript
+
 set terminal postscript eps enhanced color solid
 set output "result.ps"
 
 set xlabel "t" 
 set ylabel "A"
 set grid
-#set yrange [-1.2:1.2]
-
+set yrange [-1.2:1.2]
 set title "Amplitude modulation" font "Helvetica Bold, 20"
 plot "./plots/plot1.dat" with lines
 
 set xlabel "nu" 
 set ylabel "A"
+set yrange [0:300]
 set title "Amplitude spectrum" font "Helvetica Bold, 20"
 plot "./plots/amp_spectrum.dat" with lines
 
 set xlabel "t" 
 set ylabel "A"
+set yrange [-1.2:1.2]
 set title "Frequency modulation" font "Helvetica Bold, 20"
 plot "./plots/plot2.dat" with lines
 
 set xlabel "nu" 
 set ylabel "A"
+set yrange [0:300]
 set title "Frequency spectrum" font "Helvetica Bold, 20"
 plot "./plots/freq_spectrum.dat" with lines
 
 set xlabel "t" 
 set ylabel "A"
+set yrange [-1.2:1.2]
 set title "Phase modulation" font "Helvetica Bold, 20"
 plot "./plots/plot3.dat" with lines
 
 set xlabel "nu" 
 set ylabel "A"
+set yrange [0:300]
 set title "Phase spectrum" font "Helvetica Bold, 20"
 plot "./plots/phase_spectrum.dat" with lines
 
 set xlabel "t" 
 set ylabel "A"
+set yrange [-1.2:1.2]
 set title "Synth signal" font "Helvetica Bold, 20"
 plot "./plots/synth.dat" with lines
 
+set yrange [-1.2:1.2]
+set xlabel "t" 
+set ylabel "A"
+set title "Synth signal without noise" font "Helvetica Bold, 20"
+plot "./plots/synth_without_noise.dat" with lines

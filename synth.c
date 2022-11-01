@@ -1,6 +1,7 @@
 #include "spectrums.h"
 #include <math.h>
 #include <fftw3.h>
+#include <stdio.h>
 
 void find_max_3(int *indexes, double *a)
 {
@@ -87,3 +88,16 @@ void synth_signal(fftw_complex *amps, double *y_signal, double *x_signal)
 
     fftw_destroy_plan(plan);
 }
+
+void filter_noise(double *signal_y, double *new_signal)
+{
+    for(int i = 0; i < N_FOURIER; i++)
+    {
+        double a = fabs(signal_y[i]);
+        if(a > 0.5)
+            new_signal[i] = 1.0;
+        else
+            new_signal[i] = 0.0;
+    }
+}
+

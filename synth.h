@@ -20,4 +20,12 @@ void filter_signal(fftw_complex *amps, int *indexes);
  **/
 void synth_signal(fftw_complex *amps, double *y_signal, double *x_signal);
 
+
+/**
+ * Функция, фильтрующая сигнал через экспоненциальное бегущее среднее
+ *  signal_y - y-значения сигнала с шумом;
+ *  new_signal - выходноу массив отфильтрованного сигнала
+ **/
+void filter_noise(double *signal_y, double *new_signal);
+
 #endif

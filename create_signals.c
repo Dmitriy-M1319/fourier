@@ -1,3 +1,8 @@
+/** 
+ * Программа, которая рассчитывает графики сигналов амплитудной, частотной и фазовой модуляции, а также
+ * заполняет файлы формата .dat для отрисовки их в gnuplot.
+ **/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "signals.h"
@@ -8,6 +13,7 @@
 
 int main(void)
 {
+    /* Дескрипторы файлов с данными сигналов модуляций */
     FILE *plot1, *plot2, *plot3;
 
     plot1 = fopen("plots/plot1.dat", "w");
@@ -16,12 +22,14 @@ int main(void)
 
     double t_step = 2.0 / N;
     double t = 0;
+    
+    /* Подсчитываем значения y и заносим специальным форматом x и y в дескрипторы */
     for(int i = 0; i < N; i++)
     {
        double y = amp_modulate(t, 2 * M_PI * NU, 2 * M_PI * NU * 8, 0, 0); 
        fprintf(plot1,"%lf %lf \n" , t, y);
 
-       y = freq_modulate(t, 2.0 * M_PI * NU * 4, 2 * M_PI * NU * 8, 0, M_PI);
+       y = freq_modulate(t, 2.0 * M_PI * NU / 2, 2 * M_PI * NU * 4, 0, M_PI);
        fprintf(plot2,"%lf %lf \n" , t, y);
 
        y = phase_modulate(t, 2.0 * M_PI, 2 * M_PI * NU * 2, 0, M_PI);
@@ -30,6 +38,7 @@ int main(void)
        t += t_step;
     }
 
+    /* Записываем файлы и закрываем дескрипторы */
     fflush(plot1);
     fflush(plot2);
     fflush(plot3);
