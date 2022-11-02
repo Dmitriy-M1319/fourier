@@ -94,10 +94,19 @@ void filter_noise(double *signal_y, double *new_signal)
     for(int i = 0; i < N_FOURIER; i++)
     {
         double a = fabs(signal_y[i]);
-        if(a > 0.5)
-            new_signal[i] = 1.0;
+        if(a <= 0.25)
+        {
+            if((i != 0 && fabs(signal_y[i - 1]) > 0.25) && (i != N_FOURIER - 1 && fabs(signal_y[i + 1]) > 0.25))
+            {
+                new_signal[i] = 1.0;
+            }
+            else
+            {
+                new_signal[i] = 0.0;
+            }
+        }
         else
-            new_signal[i] = 0.0;
+            new_signal[i] = 1.0;
     }
 }
 

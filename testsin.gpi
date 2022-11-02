@@ -48,7 +48,7 @@ set yrange [-1.2:1.2]
 set title "Synth signal" font "Helvetica Bold, 20"
 plot "./plots/synth.dat" with lines
 
-set yrange [-1.2:1.2]
+set yrange [-0.5:1.2]
 set xlabel "t" 
 set ylabel "A"
 set title "Synth signal without noise" font "Helvetica Bold, 20"
